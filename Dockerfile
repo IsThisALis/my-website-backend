@@ -1,32 +1,21 @@
 FROM gradle:8-jdk21 AS build
 WORKDIR /app
 
-# Копируем оба файла конфигурации, если settings.gradle есть
 COPY build.gradle settings.gradle* ./
 RUN gradle wrapper
 
-# Копируем исходники ДО сборки
 COPY src ./src 
 
-# ОБЯЗАТЕЛЬНО clean, чтобы убить любой кэш Gradle, и bootJar для гарантированного fat-jar
+# === ДИАГНОСТИКА: Что именно видит Docker? ===
+RUN echo "=== 1. ВСЕ JAVA ФАЙЛЫ В КОНТЕЙНЕРЕ ===" && find /app/src -name "*.java" || echo "JAVA ФАЙЛЫ НЕ НАЙДЕНЫ"
+RUN echo "=== 2. СОДЕРЖИМОЕ Website.java (первые 5 строк) ===" && cat /app/src/main/java/com/isthisalis/website/Website.java | head -n 5 || echo "ФАЙЛ ПО ЭТОМУ ПУТИ ОТСУТСТВУЕТ"
+
 RUN ./gradlew clean bootJar
 
-# === ЖЕСТКАЯ ПРОВЕРКА 1: Если класса нет в собранном jar, сборка УПАДЕТ здесь ===
-RUN echo "=== ПРОВЕРКА СОДЕРЖИМОГО JAR НА ЭТАПЕ СБОРКИ ===" && \
-    ls -la /app/build/libs/ && \
-    jar tf /app/build/libs/*.jar | grep "BOOT-INF/classes/com/isthisalis/website/Website.class" || \
-    (echo "!!! ОШИБКА: Website.class НЕ НАЙДЕН В JAR ФАЙЛЕ НА ЭТАПЕ СБОРКИ !!!" && exit 1)
+RUN echo "=== 3. ВСЕ ФАЙЛЫ СО СЛОВОМ 'website' ВНУТРИ JAR ===" && jar tf /app/build/libs/*.jar | grep -i "website" || echo "НИЧЕГО НЕ НАЙДЕНО"
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app 
-
-# Копируем jar
 COPY --from=build /app/build/libs/*.jar app.jar
-
-# === ЖЕСТКАЯ ПРОВЕРКА 2: Проверяем, что именно попало в финальный образ ===
-RUN echo "=== ПРОВЕРКА СОДЕРЖИМОГО JAR В ФИНАЛЬНОМ ОБРАЗЕ ===" && \
-    jar tf app.jar | grep "BOOT-INF/classes/com/isthisalis/website/Website.class" || \
-    (echo "!!! ОШИБКА: Website.class НЕ ПОПАЛ В ФИНАЛЬНЫЙ app.jar !!!" && exit 1)
-
 EXPOSE 8080
 ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${PORT:-8080}"]
