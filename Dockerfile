@@ -1,27 +1,22 @@
 FROM gradle:8-jdk21 AS build
 WORKDIR /app
 
-# 1. Полностью изолируем кэш Gradle, чтобы исключить его влияние
-ENV GRADLE_USER_HOME=/tmp/gradle
+# Копируем ВСЁ содержимое проекта сразу, чтобы исключить рассинхрон
+COPY . .
 
-COPY build.gradle settings.gradle* ./
-RUN gradle wrapper
+# 1. ДИАГНОСТИКА: Печатаем, какие папки Gradle считает исходными
+RUN echo "=== GRADLE SOURCE SETS ===" && ./gradlew properties --no-daemon | grep -A 3 "srcDirs" || echo "Не удалось получить srcDirs"
 
-COPY src ./src 
+# 2. ПРИНУДИТЕЛЬНОЕ ИСПРАВЛЕНИЕ: Добавляем в конец build.gradle явное указание путей
+# Это перебивает любые сбои от плагинов или settings.gradle
+RUN echo "" >> build.gradle && \
+    echo "sourceSets { main { java { srcDirs = ['src/main/java'] } resources { srcDirs = ['src/main/resources'] } } }" >> build.gradle
 
-# 2. ПРОВЕРКА: Убеждаемся, что файлы на месте (для логов)
-RUN ls -la /app/src/main/java/com/isthisalis/website/
-
-# 3. ПРИНУДИТЕЛЬНОЕ УКАЗАНИЕ ИСХОДНИКОВ
-# Добавляем в конец build.gradle, чтобы перебить любые скрытые настройки sourceSets
-RUN echo "sourceSets { main { java { srcDirs = ['src/main/java'] } resources { srcDirs = ['src/main/resources'] } } }" >> build.gradle
-
-# 4. СБОРКА С ПОЛНЫМ ЛОГОМ КОМПИЛЯЦИИ
-# Если упадет, мы увидим точную причину в /tmp/build.log
+# 3. СБОРКА
 RUN ./gradlew clean compileJava bootJar --info > /tmp/build.log 2>&1 || (cat /tmp/build.log && exit 1)
 
-# 5. ФИНАЛЬНАЯ ПРОВЕРКА СОДЕРЖИМОГО JAR
-RUN jar tf /app/build/libs/*.jar | grep "BOOT-INF/classes/com/isthisalis/website/Website.class" || (echo "!!! КЛАСС ВСЕ ЕЩЕ ОТСУТСТВУЕТ В JAR !!!" && cat /tmp/build.log && exit 1)
+# 4. ПРОВЕРКА
+RUN echo "=== ПРОВЕРКА JAR ===" && jar tf /app/build/libs/*.jar | grep "BOOT-INF/classes/com/isthisalis/website/Website.class" || (echo "!!! КЛАСС НЕ НАЙДЕН !!!" && cat /tmp/build.log && exit 1)
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app 
