@@ -4,7 +4,7 @@ COPY build.gradle .
 RUN gradle wrapper
 RUN ./gradlew dependencies
 COPY src ./src 
-RUN ./gradlew build -x test
+RUN ./gradlew build
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app 
