@@ -1,18 +1,27 @@
 FROM gradle:8-jdk21 AS build
 WORKDIR /app
 
+# 1. Полностью изолируем кэш Gradle, чтобы исключить его влияние
+ENV GRADLE_USER_HOME=/tmp/gradle
+
 COPY build.gradle settings.gradle* ./
 RUN gradle wrapper
 
 COPY src ./src 
 
-# === ДИАГНОСТИКА: Что именно видит Docker? ===
-RUN echo "=== 1. ВСЕ JAVA ФАЙЛЫ В КОНТЕЙНЕРЕ ===" && find /app/src -name "*.java" || echo "JAVA ФАЙЛЫ НЕ НАЙДЕНЫ"
-RUN echo "=== 2. СОДЕРЖИМОЕ Website.java (первые 5 строк) ===" && cat /app/src/main/java/com/isthisalis/website/Website.java | head -n 5 || echo "ФАЙЛ ПО ЭТОМУ ПУТИ ОТСУТСТВУЕТ"
+# 2. ПРОВЕРКА: Убеждаемся, что файлы на месте (для логов)
+RUN ls -la /app/src/main/java/com/isthisalis/website/
 
-RUN ./gradlew clean bootJar
+# 3. ПРИНУДИТЕЛЬНОЕ УКАЗАНИЕ ИСХОДНИКОВ
+# Добавляем в конец build.gradle, чтобы перебить любые скрытые настройки sourceSets
+RUN echo "sourceSets { main { java { srcDirs = ['src/main/java'] } resources { srcDirs = ['src/main/resources'] } } }" >> build.gradle
 
-RUN echo "=== 3. ВСЕ ФАЙЛЫ СО СЛОВОМ 'website' ВНУТРИ JAR ===" && jar tf /app/build/libs/*.jar | grep -i "website" || echo "НИЧЕГО НЕ НАЙДЕНО"
+# 4. СБОРКА С ПОЛНЫМ ЛОГОМ КОМПИЛЯЦИИ
+# Если упадет, мы увидим точную причину в /tmp/build.log
+RUN ./gradlew clean compileJava bootJar --info > /tmp/build.log 2>&1 || (cat /tmp/build.log && exit 1)
+
+# 5. ФИНАЛЬНАЯ ПРОВЕРКА СОДЕРЖИМОГО JAR
+RUN jar tf /app/build/libs/*.jar | grep "BOOT-INF/classes/com/isthisalis/website/Website.class" || (echo "!!! КЛАСС ВСЕ ЕЩЕ ОТСУТСТВУЕТ В JAR !!!" && cat /tmp/build.log && exit 1)
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app 
