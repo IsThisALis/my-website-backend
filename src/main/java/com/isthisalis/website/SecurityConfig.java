@@ -5,6 +5,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -14,13 +15,20 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
   public SecurityFilterChain configure(HttpSecurity httpsec) {
-    httpsec.cors(Customizer.withDefaults());
-    httpsec.csrf(csrf -> csrf.disable());
-    httpsec.authorizeHttpRequests(auth -> { auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-      .requestMatchers(HttpMethod.GET).permitAll()
-      .anyRequest().authenticated(); 
-    } );
-    httpsec.httpBasic(Customizer.withDefaults());
+    httpsec.cors(Customizer.withDefaults())
+      .csrf(csrf -> csrf.disable())
+      .sessionManagement(session -> { session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); } );
+    httpsec.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/posts").permitAll()
+                .requestMatchers(HttpMethod.GET, "/posts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/projects").permitAll()
+                .requestMatchers(HttpMethod.GET, "/projects/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/abouts").permitAll()
+                .requestMatchers(HttpMethod.GET, "/abouts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                .anyRequest().authenticated());
+                httpsec.httpBasic(Customizer.withDefaults());
     return httpsec.build();
   }
 }
