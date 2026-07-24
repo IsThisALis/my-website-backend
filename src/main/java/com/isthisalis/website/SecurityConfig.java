@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-  public SecurityFilterChain configure(HttpSecurity httpsec) {
+  public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) {
     httpsec.cors(Customizer.withDefaults())
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> { session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); } );
