@@ -10,7 +10,7 @@ import lombok.*;
 public class About {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
-    int id;
+    Integer id;
   private @Getter @Setter @Column(name = "title", nullable = false)
     String title;
   private @Getter @Setter @Column(name = "content", nullable = false, columnDefinition = "TEXT")

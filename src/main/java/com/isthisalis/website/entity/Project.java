@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 public class Project {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
-    int id;
+    Integer id;
   private @Getter @Setter @Column(name = "techstack", nullable = false) 
     String techStack;
   private @Getter @Setter @Column(name = "name", nullable = false) 

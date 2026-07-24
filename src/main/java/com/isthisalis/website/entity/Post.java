@@ -13,7 +13,7 @@ import lombok.*;
 public class Post { 
 
   private @Getter @Setter @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
-    int id;
+    Integer id;
   private @Getter @Setter @Column(name = "title", nullable = false)
     String title;
   private @Getter @Setter @Column(name = "content", nullable = false)
