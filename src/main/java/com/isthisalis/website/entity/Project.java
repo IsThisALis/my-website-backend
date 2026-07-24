@@ -12,7 +12,7 @@ public class Project {
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     Integer id;
   private @Getter @Setter @Column(name = "techstack", nullable = false) 
-    String techStack;
+    String techstack;
   private @Getter @Setter @Column(name = "name", nullable = false) 
     String name;
   private @Getter @Setter @Column(name = "description", nullable = false)
