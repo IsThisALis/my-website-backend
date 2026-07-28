@@ -13,8 +13,8 @@ public class Comment {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     Integer id;
-  private @Getter @Setter @Column(name = "username", nullable = false) 
-    String username;
+  private @Getter @Setter @Column(name = "author", nullable = false) 
+    String author;
   private @Getter @Setter @Column(name = "body", nullable = false)
     String body;
   private @Getter @Setter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
