@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/projects/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/abouts").permitAll()
                 .requestMatchers(HttpMethod.GET, "/abouts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/comments").permitAll()
+                .requestMatchers(HttpMethod.GET, "/comments/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
                 .anyRequest().authenticated());
                 httpsec.httpBasic(Customizer.withDefaults());
