@@ -6,7 +6,7 @@ import lombok.*;
 /**
  * About
  */
-@NoArgsConstructor @AllArgsConstructor @Builder @Entity @Table(name = "about")
+  @NoArgsConstructor @AllArgsConstructor @Builder @Entity @Table(name = "about")
 public class About {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
