@@ -15,8 +15,8 @@ public class Comment {
     Integer id;
   private @Getter @Setter @Column(name = "username", nullable = false) 
     String username;
-  private @Getter @Setter @Column(name = "message", nullable = false)
-    String message;
+  private @Getter @Setter @Column(name = "body", nullable = false)
+    String body;
   private @Getter @Setter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
     Instant createdAt;
   private @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
