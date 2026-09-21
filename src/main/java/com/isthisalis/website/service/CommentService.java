@@ -2,11 +2,14 @@ package com.isthisalis.website.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.isthisalis.website.dto.CommentDTO;
 import com.isthisalis.website.repository.CommentRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class CommentService {
     
