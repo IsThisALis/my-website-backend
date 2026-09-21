@@ -8,7 +8,7 @@ import lombok.*;
 /**
  * Comment
  */
-  @AllArgsConstructor @NoArgsConstructor @Builder @Entity @Table(name = "comments")
+@AllArgsConstructor @NoArgsConstructor @Builder @Entity @Table(name = "comments")
 public class Comment {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
@@ -17,8 +17,8 @@ public class Comment {
     String author;
   private @Getter @Setter @Column(name = "body", nullable = false)
     String body;
-  private @Getter @Setter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
+  private @Getter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
     Instant createdAt;
-  private @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
+  private @Getter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
     Post post;
 }
