@@ -12,7 +12,7 @@ import lombok.Value;
 @Value
 public class PostDTO {
   String title;
-  String text;
+  String content;
   String image;
   Instant date;
 

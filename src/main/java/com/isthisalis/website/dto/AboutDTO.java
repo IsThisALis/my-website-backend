@@ -10,7 +10,7 @@ import lombok.Value;
 @Value
 public class AboutDTO {
   String title;
-  String description;
+  String content;
   String techStack;
 
   public static AboutDTO wrap(About about) {
