@@ -15,7 +15,7 @@ public class CommentService {
     
     private final CommentRepository repository;
 
-    public List<CommentDTO> getComments(int postId) {
+    public List<CommentDTO> getComments(long postId) {
         return repository.findByPostIdOrderByCreatedAtDesc(postId)
             .stream()
             .map(CommentDTO::wrap)
