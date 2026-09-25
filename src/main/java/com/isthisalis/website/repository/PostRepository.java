@@ -9,4 +9,4 @@ import com.isthisalis.website.entity.Post;
  * PostRepository
  */
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {}
+public interface PostRepository extends JpaRepository<Post, Long> {}

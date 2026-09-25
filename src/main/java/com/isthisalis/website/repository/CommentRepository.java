@@ -11,7 +11,7 @@ import com.isthisalis.website.entity.Comment;
  * CommentRepository
  */
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-  List<Comment> findByPostIdOrderByCreatedAtDesc(int postId);
+  List<Comment> findByPostIdOrderByCreatedAtDesc(long postId);
 }

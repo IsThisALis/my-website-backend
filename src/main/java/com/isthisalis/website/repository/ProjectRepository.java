@@ -9,4 +9,4 @@ import com.isthisalis.website.entity.Project;
  * ProjectRepository
  */
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Integer> {}
+public interface ProjectRepository extends JpaRepository<Project, Long> {}
