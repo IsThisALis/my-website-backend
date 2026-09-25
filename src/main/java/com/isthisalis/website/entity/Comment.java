@@ -2,6 +2,8 @@ package com.isthisalis.website.entity;
 
 import java.time.Instant;
 
+import com.isthisalis.website.dto.CommentDTO;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +14,7 @@ import lombok.*;
 public class Comment {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
-    Integer id;
+    Long id;
   private @Getter @Setter @Column(name = "author", nullable = false) 
     String author;
   private @Getter @Setter @Column(name = "body", nullable = false)
@@ -21,4 +23,8 @@ public class Comment {
     Instant createdAt;
   private @Getter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
     Post post;
+
+    public static Comment wrap(CommentDTO commentDTO) {
+      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt(), commentDTO.getPost());
+    }
 }
