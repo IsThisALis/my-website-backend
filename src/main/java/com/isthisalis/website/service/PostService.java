@@ -23,7 +23,7 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     public List<PostDTO> getAllPosts() {
-        return postRepository.findAllOrderByCreatedAtDesc()
+        return postRepository.findAllByOrderByCreatedAtDesc()
             .stream()
             .map(PostDTO::wrap)
             .toList();

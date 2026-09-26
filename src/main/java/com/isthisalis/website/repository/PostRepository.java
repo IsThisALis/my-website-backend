@@ -12,5 +12,5 @@ import com.isthisalis.website.entity.Post;
  */
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAllOrderByCreatedAtDesc();
+    List<Post> findAllByOrderByCreatedAtDesc();
 }
