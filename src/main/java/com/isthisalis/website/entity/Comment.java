@@ -21,7 +21,7 @@ public class Comment {
     String body;
   private @Getter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
     Instant createdAt;
-  private @Getter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
+  private @Getter @Setter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
     Post post;
 
     public static Comment wrap(CommentDTO commentDTO) {

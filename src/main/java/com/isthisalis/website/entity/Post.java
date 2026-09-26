@@ -1,6 +1,8 @@
 package com.isthisalis.website.entity;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.isthisalis.website.dto.PostDTO;
 
@@ -10,21 +12,28 @@ import lombok.*;
 /**
  * Post
  */  
-@Builder @NoArgsConstructor @AllArgsConstructor @Entity @Table(name = "posts") 
+@Entity
+@Table(name = "posts") 
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor  
 public class Post { 
 
-  private @Getter @Setter @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
+  private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     Long id;
-  private @Getter @Setter @Column(name = "title", nullable = false)
+  private @Setter @Column(name = "title", nullable = false)
     String title;
-  private @Getter @Setter @Column(name = "content", nullable = false)
+  private @Setter @Column(name = "content", nullable = false)
     String content;
-  private @Getter @Setter @Column(name = "image", nullable = true)
+  private @Setter @Column(name = "image")
     String image;
-  private @Getter @Setter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
+  private @Setter @Column(name = "createdat", nullable = false) 
     Instant createdAt;
+  private @Builder.Default @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) @JoinColumn(name = "post_id") 
+    List<Comment> comments = new ArrayList<>();
 
   public static Post wrap(PostDTO postDTO) {
-    return new Post(null, postDTO.getTitle(), postDTO.getContent(), postDTO.getImage(), postDTO.getDate());
+    return new Post(null, postDTO.getTitle(), postDTO.getContent(), postDTO.getImage(), postDTO.getDate(), null);
   }
 }
