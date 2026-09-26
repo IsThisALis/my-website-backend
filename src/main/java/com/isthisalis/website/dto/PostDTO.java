@@ -11,12 +11,13 @@ import lombok.Value;
  */
 @Value
 public class PostDTO {
+  long id;
   String title;
   String content;
   String image;
   Instant date;
 
   public static PostDTO wrap(Post post) {
-        return new PostDTO(post.getTitle(), post.getContent(), post.getImage(), post.getCreatedAt());
+        return new PostDTO(post.getId(), post.getTitle(), post.getContent(), post.getImage(), post.getCreatedAt());
     }
 }
