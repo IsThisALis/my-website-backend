@@ -23,7 +23,7 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     public List<PostDTO> getAllPosts() {
-        return postRepository.findAll()
+        return postRepository.findAllOrderByCreatedAtDesc()
             .stream()
             .map(PostDTO::wrap)
             .toList();
@@ -50,7 +50,7 @@ public class PostService {
     }
 
     public void editComment(long postId, long commentId) {
-
+        
     }
 
     public void deletePost(long postId) {
