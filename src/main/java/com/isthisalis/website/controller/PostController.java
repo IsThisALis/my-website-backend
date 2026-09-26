@@ -15,7 +15,6 @@ import com.isthisalis.website.dto.CommentDTO;
 import com.isthisalis.website.dto.PostDTO;
 import com.isthisalis.website.entity.Post;
 
-import com.isthisalis.website.service.CommentService;
 import com.isthisalis.website.service.PostService;
 
 import jakarta.validation.Valid;
@@ -26,15 +25,22 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/posts")
 public class PostController {
     
-    private final CommentService commentService;
     private final PostService postService;
-
 
     @GetMapping("/{id}/comments")
     public List<CommentDTO> getComments(@PathVariable int id) {
-        return commentService.getComments(id);
+        return postService.getComments(id);
     }
 
+    @PostMapping("/{postId}/comments/add")
+    public void addComment(@PathVariable long postId, @RequestBody CommentDTO comment) {
+        postService.addComment(postId, comment);
+    }
+
+    @PatchMapping("/{postId}/comments/{commentId}/edit")
+    public void editComment(@PathVariable long postId, @PathVariable long commentId, @RequestBody CommentDTO commentDTO) {
+
+    }
 
     @GetMapping
     public List<PostDTO> getPosts() {
@@ -44,7 +50,7 @@ public class PostController {
 
     @DeleteMapping("/{id}/delete")
     public void deletePost(@PathVariable int id) {
-        postService.delete(id);
+        postService.deletePost(id);
     }
 
 

@@ -3,6 +3,7 @@ package com.isthisalis.website.controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,18 +24,23 @@ public class AboutController {
     
     @GetMapping
     public AboutDTO getAbout() {
-        return aboutService.get();
+        return aboutService.getAbout();
     }
 
 
+    @PostMapping
+    public void createAbout(@RequestBody AboutDTO aboutDTO) {
+        aboutService.createAbout(aboutDTO);
+    }
+
     @PatchMapping
     public void editAbout(@Valid @RequestBody AboutDTO aboutDTO) {
-        aboutService.edit(aboutDTO);
+        aboutService.editAbout(aboutDTO);
     }
 
 
     @DeleteMapping
     public void deleteAbout() {
-        aboutService.delete();
+        aboutService.deleteAbout();
     }
 }

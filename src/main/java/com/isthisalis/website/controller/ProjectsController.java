@@ -50,7 +50,7 @@ public class ProjectsController {
     }
 
     @PostMapping
-    public void addProject(@Valid @RequestBody ProjectDTO projectDTO) {
-        service.addProject(projectDTO);
+    public void createProject(@Valid @RequestBody ProjectDTO projectDTO) {
+        service.createProject(projectDTO);
     }
 }
