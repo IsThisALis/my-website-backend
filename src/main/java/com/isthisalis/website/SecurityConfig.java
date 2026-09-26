@@ -23,8 +23,8 @@ public class SecurityConfig {
       .sessionManagement(session -> { session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); } );
     httpsec.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, api + "/comments").permitAll()
-                .requestMatchers(HttpMethod.GET, api + "/posts", api + "/abouts", api + "/projects", api + "/comments").permitAll()
-                .requestMatchers(HttpMethod.GET, api + "/posts/**", api + "/abouts/**", api + "/projects/**", api + "/comments/**").permitAll()
+                .requestMatchers(HttpMethod.GET, api + "/posts", api + "/about", api + "/projects").permitAll()
+                .requestMatchers(HttpMethod.GET, api + "/posts/**", api + "/about/**", api + "/projects/**", api + "/comments/**").permitAll()
                 .requestMatchers("/**").authenticated()
                 .anyRequest().authenticated());
                 httpsec.httpBasic(Customizer.withDefaults());
