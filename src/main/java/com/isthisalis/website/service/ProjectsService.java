@@ -50,7 +50,7 @@ public class ProjectsService {
     }
 
 
-    public void addProject(ProjectDTO projectDTO) {
+    public void createProject(ProjectDTO projectDTO) {
         repository.save(Project.wrap(projectDTO));
     }
 }

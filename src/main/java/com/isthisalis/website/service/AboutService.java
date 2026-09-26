@@ -17,12 +17,15 @@ public class AboutService {
     private final AboutRepository repository;
 
 
-    public AboutDTO get() {
+    public AboutDTO getAbout() {
         return AboutDTO.wrap(repository.findAll().getLast());
     }
 
+    public void createAbout(AboutDTO aboutDTO) {
+        repository.save(About.wrap(aboutDTO));
+    }
 
-    public void edit(AboutDTO aboutDTO) {
+    public void editAbout(AboutDTO aboutDTO) {
         About about = repository.findById(1L)
             .orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404))
         );
@@ -33,7 +36,7 @@ public class AboutService {
     }
 
 
-    public void delete() {
+    public void deleteAbout() {
         repository.deleteById(1L);
     }
 }
