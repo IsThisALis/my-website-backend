@@ -13,12 +13,12 @@ public class Project {
 
   private @Getter @Setter @Column(name = "id", nullable = false) @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     Long id;
-  private @Getter @Setter @Column(name = "techstack", nullable = false) 
-    String techstack;
   private @Getter @Setter @Column(name = "name", nullable = false) 
     String name;
   private @Getter @Setter @Column(name = "description", nullable = false)
     String description;
+  private @Getter @Setter @Column(name = "techstack", nullable = false) 
+    String techstack;
   private @Getter @Setter @Column(name = "url", nullable = false)
     String url;
 
