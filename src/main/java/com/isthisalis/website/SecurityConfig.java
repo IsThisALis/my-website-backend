@@ -15,13 +15,13 @@ import org.springframework.security.web.SecurityFilterChain;
   @Configuration @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
+  @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) {
     httpsec.cors(Customizer.withDefaults())
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> { session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); } );
     httpsec.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST,"/api/posts/*/comments", "/api/posts/*/comments/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/posts/{postId}/comments", "/api/posts/{postId}/comments/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/posts", "/api/about", "/api/projects").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/posts/**", "/api/about/**", "/api/projects/**", "/api/comments/**").permitAll()
                 .requestMatchers("/**").authenticated()

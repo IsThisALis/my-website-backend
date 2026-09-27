@@ -14,11 +14,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
   @Configuration
 public class CorsConfig {
 
-    @Bean
+  @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(List.of("https://isthisalis.github.io"));
-    configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS", "HEAD"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH", "OPTIONS", "HEAD"));
     configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "Origin", "X-Requested-With"));
     configuration.setAllowCredentials(true);
     configuration.setMaxAge(3600L);

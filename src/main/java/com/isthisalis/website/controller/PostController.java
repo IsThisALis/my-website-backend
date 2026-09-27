@@ -27,7 +27,7 @@ public class PostController {
     
     private final PostService postService;
 
-    @GetMapping("/{id}/comments")
+    @GetMapping("/{postId}/comments")
     public List<CommentDTO> getComments(@PathVariable int id) {
         return postService.getComments(id);
     }
@@ -48,15 +48,15 @@ public class PostController {
     }
 
 
-    @DeleteMapping("/{id}/delete")
-    public void deletePost(@PathVariable int id) {
-        postService.deletePost(id);
+    @DeleteMapping("/{postId}/delete")
+    public void deletePost(@PathVariable int postId) {
+        postService.deletePost(postId);
     }
 
 
-    @PatchMapping("/{id}/edit")
-    public void editPost(@PathVariable int id, @Valid @RequestBody PostDTO postDTO) {
-        postService.editPost(id, postDTO);
+    @PatchMapping("/{postId}/edit")
+    public void editPost(@PathVariable int postId, @Valid @RequestBody PostDTO postDTO) {
+        postService.editPost(postId, postDTO);
     }
 
     @PostMapping
