@@ -9,9 +9,9 @@ import lombok.Value;
  */
 @Value
 public class ProjectDTO {
-  String techStack;
   String name;
   String description;
+  String techStack;
   String url;
 
   public static ProjectDTO wrap(Project project) {
