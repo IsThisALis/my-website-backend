@@ -28,8 +28,8 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/{postId}/comments")
-    public List<CommentDTO> getComments(@PathVariable int id) {
-        return postService.getComments(id);
+    public List<CommentDTO> getComments(@PathVariable int postId) {
+        return postService.getComments(postId);
     }
 
     @PostMapping("/{postId}/comments/add")
