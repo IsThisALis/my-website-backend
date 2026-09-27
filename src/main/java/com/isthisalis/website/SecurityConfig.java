@@ -23,8 +23,7 @@ public class SecurityConfig {
     httpsec.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST,"/api/posts/*/comments/add").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/posts", "/api/about", "/api/projects", "/api/posts/*/comments").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/posts/**", "/api/about/**", "/api/projects/**", "/api/posts/{postId}/comments/**").permitAll()
-                .requestMatchers("/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/posts/**", "/api/about/**", "/api/projects/**", "/api/posts/*/comments/**").permitAll()
                 .anyRequest().authenticated());
                 httpsec.httpBasic(Customizer.withDefaults());
     return httpsec.build();
