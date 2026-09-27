@@ -21,9 +21,9 @@ public class SecurityConfig {
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> { session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); } );
     httpsec.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST,"/api/posts/{postId}/comments", "/api/posts/{postId}/comments/**").permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/posts", "/api/about", "/api/projects").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/posts/**", "/api/about/**", "/api/projects/**", "/api/comments/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/posts/{postId}/comments/add").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/posts", "/api/about", "/api/projects", "/api/posts/{postId}/comments").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/posts/**", "/api/about/**", "/api/projects/**", "/api/posts/{postId}/comments/**").permitAll()
                 .requestMatchers("/**").authenticated()
                 .anyRequest().authenticated());
                 httpsec.httpBasic(Customizer.withDefaults());
