@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isthisalis.website.dto.CommentDTO;
 import com.isthisalis.website.dto.PostDTO;
-import com.isthisalis.website.entity.Post;
 
 import com.isthisalis.website.service.PostService;
 
@@ -25,22 +24,32 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/posts")
 public class PostController {
     
+    /**
+     * Post 
+     */
     private final PostService postService;
 
     @GetMapping("/{postId}/comments")
-    public List<CommentDTO> getComments(@PathVariable int postId) {
+    public List<CommentDTO> getComments(@PathVariable long postId) {
         return postService.getComments(postId);
     }
 
-    @PostMapping("/{postId}/comments/add")
-    public void addComment(@PathVariable long postId, @RequestBody CommentDTO comment) {
+    @PostMapping("/{postId}/comments")
+    public void addComment(@PathVariable long postId, @Valid @RequestBody CommentDTO comment) {
         postService.addComment(postId, comment);
     }
 
-    @PatchMapping("/{postId}/comments/{commentId}/edit")
-    public void editComment(@PathVariable long postId, @PathVariable long commentId, @RequestBody CommentDTO commentDTO) {
-
+    @PatchMapping("/{postId}/comments/{commentId}")
+    public void editComment(@PathVariable long commentId, @Valid @RequestBody CommentDTO commentDTO) {
+        postService.editComment(commentId, commentDTO);
     }
+
+
+    @DeleteMapping("/{postId}/comments/{commentId}")
+    public void deleteComment(@PathVariable long commentId) {
+        postService.deleteComment(commentId);
+    }
+
 
     @GetMapping
     public List<PostDTO> getPosts() {
@@ -49,18 +58,18 @@ public class PostController {
 
 
     @DeleteMapping("/{postId}/delete")
-    public void deletePost(@PathVariable int postId) {
+    public void deletePost(@PathVariable long postId) {
         postService.deletePost(postId);
     }
 
 
-    @PatchMapping("/{postId}/edit")
-    public void editPost(@PathVariable int postId, @Valid @RequestBody PostDTO postDTO) {
+    @PatchMapping("/{postId}")
+    public void editPost(@PathVariable long postId, @Valid @RequestBody PostDTO postDTO) {
         postService.editPost(postId, postDTO);
     }
 
     @PostMapping
     public void addPost(@Valid @RequestBody PostDTO post) {
-        postService.addPost(Post.wrap(post));
+        postService.addPost(post);
     }
 }

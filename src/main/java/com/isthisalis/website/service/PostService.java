@@ -30,7 +30,8 @@ public class PostService {
     }
 
     public List<CommentDTO> getComments(long postId) {
-        return commentRepository.findByPostIdOrderByCreatedAtDesc(postId)
+        return postRepository.findById(postId)
+            .get().getComments()
             .stream()
             .map(CommentDTO::wrap)
             .toList();
@@ -48,8 +49,11 @@ public class PostService {
         commentRepository.deleteById(commentId);
     }
 
-    public void editComment(long postId, long commentId) {
-        
+    public void editComment(long commentId, CommentDTO commentDTO) {
+        Comment comment = commentRepository.findById(commentId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404)));
+        comment.setAuthor(commentDTO.getAuthor());
+        comment.setBody(commentDTO.getBody());
     }
 
     public void deletePost(long postId) {
@@ -65,7 +69,7 @@ public class PostService {
         post.setImage(postDTO.getImage());
     }
 
-    public void addPost(Post post) {
-        postRepository.save(post);
+    public void addPost(PostDTO post) {
+        postRepository.save(Post.wrap(post));
     }
 }
