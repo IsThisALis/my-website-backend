@@ -40,8 +40,7 @@ public class PostService {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404)));
         Comment comment = Comment.wrap(commentDTO);
-            comment.setPost(post);
-
+        post.getComments().add(comment);
         commentRepository.save(comment);
     }
 

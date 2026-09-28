@@ -21,10 +21,10 @@ public class Comment {
     String body;
   private @Getter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
     Instant createdAt;
-  private @Getter @Setter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
-    Post post;
+  //private @Getter @Setter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
+    //Post post;
 
     public static Comment wrap(CommentDTO commentDTO) {
-      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt(), commentDTO.getPost());
+      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt());
     }
 }
