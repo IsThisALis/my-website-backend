@@ -2,6 +2,7 @@ package com.isthisalis.website.entity;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.isthisalis.website.dto.CommentDTO;
 
 import jakarta.persistence.*;
@@ -21,10 +22,10 @@ public class Comment {
     String body;
   private @Getter @Column(name = "createdat", nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE") 
     Instant createdAt;
-  //private @Getter @Setter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false)
-    //Post post;
+  private @Getter @Setter @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "post_id", nullable = false) @JsonIgnore
+    Post post;
 
     public static Comment wrap(CommentDTO commentDTO) {
-      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt());
+      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt(), null);
     }
 }
