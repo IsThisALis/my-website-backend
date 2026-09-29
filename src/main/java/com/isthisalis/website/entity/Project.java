@@ -23,6 +23,10 @@ public class Project {
     String url;
 
   public static Project wrap(ProjectDTO projectDTO) {
-    return new Project(null, projectDTO.getTechStack(), projectDTO.getName(), projectDTO.getDescription(), projectDTO.getUrl());
+    return Project.builder()
+      .name(projectDTO.getName())
+      .description(projectDTO.getDescription())
+      .techstack(projectDTO.getTechStack())
+      .build();
   }
 }

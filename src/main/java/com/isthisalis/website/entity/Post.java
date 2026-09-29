@@ -22,18 +22,31 @@ public class Post {
 
   private @GeneratedValue(strategy = GenerationType.IDENTITY) @Id
     Long id;
+
   private @Setter @Column(name = "title", nullable = false)
     String title;
+
   private @Setter @Column(name = "content", nullable = false)
     String content;
+
   private @Setter @Column(name = "image")
     String image;
+
   private @Setter @Column(name = "createdat", nullable = false) 
     Instant createdAt;
+
   private @Builder.Default @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) @JoinColumn(name = "post_id") 
     List<Comment> comments = new ArrayList<>();
+    
+  private @Getter @Setter 
+    Tag tag;
 
   public static Post wrap(PostDTO postDTO) {
-    return new Post(null, postDTO.getTitle(), postDTO.getContent(), postDTO.getImage(), postDTO.getDate(), null);
+    return Post.builder()
+      .title(postDTO.getTitle())
+      .content(postDTO.getContent())
+      .createdAt(postDTO.getDate())
+      .image(postDTO.getImage())
+      .build();
   }
 }

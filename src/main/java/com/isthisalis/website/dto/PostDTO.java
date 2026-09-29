@@ -16,8 +16,9 @@ public class PostDTO {
   String content;
   String image;
   Instant date;
+  TagDTO tag;
 
   public static PostDTO wrap(Post post) {
-        return new PostDTO(post.getId(), post.getTitle(), post.getContent(), post.getImage(), post.getCreatedAt());
+        return new PostDTO(post.getId(), post.getTitle(), post.getContent(), post.getImage(), post.getCreatedAt(), TagDTO.wrap(post.getTag()));
     }
 }

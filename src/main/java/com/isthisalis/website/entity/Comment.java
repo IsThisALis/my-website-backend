@@ -26,6 +26,10 @@ public class Comment {
     Post post;
 
     public static Comment wrap(CommentDTO commentDTO) {
-      return new Comment(null, commentDTO.getAuthor(), commentDTO.getBody(), commentDTO.getCreatedAt(), null);
+      return Comment.builder()
+        .author(commentDTO.getAuthor())
+        .body(commentDTO.getBody())
+        .createdAt(commentDTO.getCreatedAt())
+        .build();
     }
 }

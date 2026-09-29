@@ -21,6 +21,10 @@ public class About {
     String techstack;
 
     public static About wrap(AboutDTO aboutDTO) {
-      return new About(null, aboutDTO.getTitle(), aboutDTO.getContent(), aboutDTO.getTechStack());
+      return About.builder() 
+        .title(aboutDTO.getTitle())
+        .content(aboutDTO.getContent())
+        .techstack(aboutDTO.getTechStack())
+        .build();
     }
 }
