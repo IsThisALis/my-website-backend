@@ -15,6 +15,6 @@ public class ProjectDTO {
   String url;
 
   public static ProjectDTO wrap(Project project) {
-    return new ProjectDTO(project.getTechstack(), project.getName(), project.getDescription(), project.getUrl());
+    return new ProjectDTO(project.getName(), project.getDescription(), project.getTechstack(), project.getUrl());
   }
 }
