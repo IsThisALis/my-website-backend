@@ -42,7 +42,7 @@ public class PostService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404)));
         Comment comment = Comment.wrap(commentDTO);
         post.getComments().add(comment);
-        commentRepository.save(comment);
+        postRepository.save(post);
     }
 
     public void deleteComment(long commentId) {
