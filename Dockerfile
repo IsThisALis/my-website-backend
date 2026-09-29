@@ -8,13 +8,13 @@ ENV GRADLE_USER_HOME=/home/gradle
 COPY build.gradle* settings.gradle* gradlew ./
 COPY gradle ./gradle
 
-RUN --mount=type=cache,target=/home/gradle \
-    chmod +x ./gradlew && ./gradlew --version
+#RUN --mount=type=cache,target=/home/gradle \
+#    chmod +x ./gradlew && ./gradlew --version
 
 COPY src ./src
 
 RUN --mount=type=cache,target=/home/gradle \
-    ./gradlew bootJar --no-daemon && \
+    gradle bootJar --no-daemon && \
     find build/libs -maxdepth 1 -name '*.jar' ! -name '*-plain.jar' -exec mv {} /workspace/app.jar \;
 
 FROM ibm-semeru-runtimes:open-21-jre
