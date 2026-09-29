@@ -1,161 +1,153 @@
-# EXAMPLE:
-**ACTION_NAME**:
-    *HTTP_METHOD*
-    *ENDPOINT*
-    *REQUEST_BODY_FORMAT* (IF EXISTS) 
-    *AVAILABLE_RESPONSES*:
-        1. RESPONSE1
-        2. RESPONSE2
-
-# API:
+# API Documentation
 
 ## About
 
 **GET_ABOUT**:
-- *HTTP_METHOD*: `GET`
-- *ENDPOINT*: `/api/about`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Returns About
+    GET /api/about
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns AboutDTO
 
 **CREATE_ABOUT**:
-- *HTTP_METHOD*: `POST`
-- *ENDPOINT*: `/api/about`
-- *REQUEST_BODY_FORMAT*: `About`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully created
-    2. `400 Bad Request` - Invalid request body
+    POST /api/about
+    REQUEST_BODY: AboutDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully created
+        2. 400 Bad Request - Invalid request body
 
 **EDIT_ABOUT**:
-- *HTTP_METHOD*: `PATCH`
-- *ENDPOINT*: `/api/about`
-- *REQUEST_BODY_FORMAT*: `About`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully updated
-    2. `400 Bad Request` - Invalid request body
+    PATCH /api/about
+    REQUEST_BODY: AboutDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully updated
+        2. 400 Bad Request - Invalid request body
 
 **DELETE_ABOUT**:
-- *HTTP_METHOD*: `DELETE`
-- *ENDPOINT*: `/api/about`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully deleted
-
+    DELETE /api/about
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully deleted
 
 ## Posts
 
-**GET_POST_COMMENTS**:
-- *HTTP_METHOD*: `GET`
-- *ENDPOINT*: `/api/posts/{id}/comments`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Returns List<Comment>
-    2. `404 Not Found` - Post not found
-
 **GET_POSTS**:
-- *HTTP_METHOD*: `GET`
-- *ENDPOINT*: `/api/posts`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Returns List<Post>
-
-**DELETE_POST**:
-- *HTTP_METHOD*: `DELETE`
-- *ENDPOINT*: `/api/posts/{id}/delete`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully deleted
-    2. `404 Not Found` - Post not found
-
-**EDIT_POST**:
-- *HTTP_METHOD*: `PATCH`
-- *ENDPOINT*: `/api/posts/{id}/edit`
-- *REQUEST_BODY_FORMAT*: `Post`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully updated
-    2. `400 Bad Request` - Invalid request body
-    3. `404 Not Found` - Post not found
+    GET /api/posts
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns List<PostDTO>
 
 **ADD_POST**:
-- *HTTP_METHOD*: `POST`
-- *ENDPOINT*: `/api/posts`
-- *REQUEST_BODY_FORMAT*: `Post`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully created
-    2. `400 Bad Request` - Invalid request body
+    POST /api/posts
+    REQUEST_BODY: PostDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully created
+        2. 400 Bad Request - Invalid request body
 
+**EDIT_POST**:
+    PATCH /api/posts/{postId}
+    REQUEST_BODY: PostDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully updated
+        2. 400 Bad Request - Invalid request body
+        3. 404 Not Found - Post not found
+
+**DELETE_POST**:
+    DELETE /api/posts/{postId}/delete
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully deleted
+        2. 404 Not Found - Post not found
+
+**GET_POST_COMMENTS**:
+    GET /api/posts/{postId}/comments
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns List<CommentDTO>
+        2. 404 Not Found - Post not found
+
+**ADD_COMMENT**:
+    POST /api/posts/{postId}/comments
+    REQUEST_BODY: CommentDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully created
+        2. 400 Bad Request - Invalid request body
+
+**EDIT_COMMENT**:
+    PATCH /api/posts/{postId}/comments/{commentId}
+    REQUEST_BODY: CommentDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully updated
+        2. 400 Bad Request - Invalid request body
+        3. 404 Not Found - Comment not found
+
+**DELETE_COMMENT**:
+    DELETE /api/posts/{postId}/comments/{commentId}
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully deleted
+        2. 404 Not Found - Comment not found
 
 ## Projects
 
 **GET_PROJECT_BY_ID**:
-- *HTTP_METHOD*: `GET`
-- *ENDPOINT*: `/api/projects/{id}`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Returns Project
-    2. `404 Not Found` - Project not found
+    GET /api/projects/{id}
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns ProjectDTO
+        2. 404 Not Found - Project not found
 
 **GET_PROJECTS**:
-- *HTTP_METHOD*: `GET`
-- *ENDPOINT*: `/api/projects`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Returns List<Project>
-
-**EDIT_PROJECT**:
-- *HTTP_METHOD*: `PATCH`
-- *ENDPOINT*: `/api/projects/{id}`
-- *REQUEST_BODY_FORMAT*: `Project`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully updated
-    2. `400 Bad Request` - Invalid request body
-    3. `404 Not Found` - Project not found
-
-**DELETE_ALL_PROJECTS**:
-- *HTTP_METHOD*: `DELETE`
-- *ENDPOINT*: `/api/projects`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - All projects successfully deleted
-
-**DELETE_PROJECT_BY_ID**:
-- *HTTP_METHOD*: `DELETE`
-- *ENDPOINT*: `/api/projects/{id}`
-- *REQUEST_BODY_FORMAT*: None
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully deleted
-    2. `404 Not Found` - Project not found
+    GET /api/projects
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns List<ProjectDTO>
 
 **ADD_PROJECT**:
-- *HTTP_METHOD*: `POST`
-- *ENDPOINT*: `/api/projects`
-- *REQUEST_BODY_FORMAT*: `Project`
-- *AVAILABLE_RESPONSES*:
-    1. `200 OK` - Successfully created
-    2. `400 Bad Request` - Invalid request body
+    POST /api/projects
+    REQUEST_BODY: ProjectDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully created
+        2. 400 Bad Request - Invalid request body
 
+**EDIT_PROJECT**:
+    PATCH /api/projects/{id}
+    REQUEST_BODY: ProjectDTO
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully updated
+        2. 400 Bad Request - Invalid request body
+        3. 404 Not Found - Project not found
 
-# Data structures:
+**DELETE_PROJECT_BY_ID**:
+    DELETE /api/projects/{id}
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Successfully deleted
+        2. 404 Not Found - Project not found
 
-## About
-- title: String
-- content: String
-- techStack: String
+**DELETE_ALL_PROJECTS**:
+    DELETE /api/projects
+    AVAILABLE_RESPONSES:
+        1. 200 OK - All projects successfully deleted
 
-## Comment
-- author: String
-- body: String
-- createdAt: Instant
-- post: Post
+## Health
 
-## Post
+**HEALTH_CHECK**:
+    GET /api/health
+    AVAILABLE_RESPONSES:
+        1. 200 OK - Returns {"status": "UP", "timestamp": "..."}
+
+# Data Structures
+
+## PostDTO
+- id: long
 - title: String
 - content: String
 - image: String
 - date: Instant
 
-## Project
+## CommentDTO
+- author: String
+- body: String
+- createdAt: Instant
+
+## AboutDTO
+- title: String
+- content: String
 - techStack: String
+
+## ProjectDTO
 - name: String
 - description: String
+- techStack: String
 - url: String
