@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.isthisalis.website.entity.Post;
+import com.isthisalis.website.entity.Tag;
 
 /**
  * PostRepository
@@ -13,4 +14,5 @@ import com.isthisalis.website.entity.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByOrderByCreatedAtDesc();
+    List<Post> findAllByTag(Tag tag);
 }
