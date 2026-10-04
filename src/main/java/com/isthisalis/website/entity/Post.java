@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.isthisalis.website.dto.PostDTO;
 
 import jakarta.persistence.*;
@@ -38,7 +39,7 @@ public class Post {
   private @Builder.Default @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) @JoinColumn(name = "post_id") 
     List<Comment> comments = new ArrayList<>();
     
-  private @Getter @Setter 
+  private @Getter @Setter @JsonIgnore
     Tag tag;
 
   public static Post wrap(PostDTO postDTO) {
