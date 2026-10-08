@@ -9,7 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,10 +25,10 @@ public class Tag {
     private @Id @GeneratedValue
         Long id;
 
-    @Getter @Setter @Column(nullable = false) String name;
+    private @Getter @Setter @Column(nullable = false, unique = true) String name;
 
-    @ManyToMany(mappedBy = "tags") @Builder.Default
-    List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "tag") @Builder.Default @Getter
+    private List<Post> posts = new ArrayList<>();
 
     public static Tag wrap(TagDTO tagDTO) {
         return Tag.builder()

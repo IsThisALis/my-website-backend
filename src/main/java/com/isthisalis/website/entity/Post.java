@@ -36,10 +36,10 @@ public class Post {
   private @Setter @Column(name = "createdat", nullable = false) 
     Instant createdAt;
 
-  private @Builder.Default @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) @JoinColumn(name = "post_id") 
+  private @Builder.Default @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) @JoinColumn(name = "post_comments") 
     List<Comment> comments = new ArrayList<>();
     
-  private @Getter @Setter @JsonIgnore
+  private @Getter @Setter @JsonIgnore @ManyToOne @JoinColumn(name = "tag")
     Tag tag;
 
   public static Post wrap(PostDTO postDTO) {
